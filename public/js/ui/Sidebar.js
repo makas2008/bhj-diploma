@@ -18,17 +18,41 @@ class Sidebar {
    * при нажатии на кнопку .sidebar-toggle
    * */
   static initToggleButton() {
-
+    const burger = document.querySelector(".sidebar-toggle");
+    burger.addEventListener("click", event => {
+      event.preventDefault();
+      document.body.classList.toggle("sidebar-open");
+      document.body.classList.toggle("sidebar-collapse");
+    });
   }
 
   /**
    * При нажатии на кнопку входа, показывает окно входа
    * (через найденное в App.getModal)
-   * При нажатии на кнопку регастрации показывает окно регистрации
+   * При нажатии на кнопку регистрации показывает окно регистрации
    * При нажатии на кнопку выхода вызывает User.logout и по успешному
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+    const loginLink = document.querySelector(".menu-item_login > a");
+    const registerLink = document.querySelector(".menu-item_register > a");
+    const logoutLink = document.querySelector(".menu-item_logout > a");
 
+    loginLink.addEventListener("click", event => {
+      event.preventDefault();
+      const login = App.getModal("login");
+      login.open();
+    });
+
+    registerLink.addEventListener("click", event => {
+      event.preventDefault();
+      const register = App.getModal("register");
+      register.open();
+    });
+
+    logoutLink.addEventListener("click", event => {
+      event.preventDefault();
+      User.logout(() => App.setState("init"));
+    });
   }
 }
